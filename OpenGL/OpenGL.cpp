@@ -61,6 +61,32 @@ void display(void)
 	glVertex3i(85, 45, 0);
 	glEnd();
 
+	//混合顶点数组绘制图形
+	static GLfloat pentagon[] = {
+		65.0, 55.0, 0.0, 1.0, 0.0, 0.0,
+		75.0, 55.0, 0.0, 0.0, 1.0, 0.0,
+		80.0, 65.0, 0.0, 0.0, 0.0, 1.0,
+		70.0, 75.0, 0.0, 1.0, 1.0, 0.0,
+		60.0, 65.0, 0.0, 0.0, 1.0, 1.0
+	};
+	glPolygonMode(GL_FRONT, GL_FILL);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glColorPointer(3, GL_FLOAT, 6 * sizeof(GL_FLOAT), &pentagon[3]);
+	glVertexPointer(3, GL_FLOAT, 6 * sizeof(GL_FLOAT), &pentagon[0]);
+// 	glBegin(GL_POLYGON);
+// 	glArrayElement(0);
+// 	glArrayElement(1);
+// 	glArrayElement(2);
+// 	glArrayElement(3);
+// 	glArrayElement(4);
+// 	glEnd();
+	//或者用索引
+	static GLbyte index[] = { 0, 1, 2, 3, 4 };
+	glDrawElements(GL_POLYGON, 5, GL_UNSIGNED_BYTE, index);
+
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 	glFlush();/* start processing buffered OpenGL routines   */
 }
 
@@ -69,7 +95,7 @@ void init(void)
 	glClearColor(0.0, 0.0, 0.0, 0.0);/* select clearing color   */
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0, 100.0, 0.0, 100.0, -50.0, 50.0);/* initialize viewing values   */
+	glOrtho(0.0, 400.0, 0.0, 400.0, -50.0, 50.0);/* initialize viewing values   */
 }
 
 int main(int argc, char** argv)
