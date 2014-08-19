@@ -81,15 +81,30 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayBuffer.h" />
+    <ClInclude Include="CullFace.h" />
+    <ClInclude Include="EdgeFlag.h" />
+    <ClInclude Include="OpenGL.h" />
+    <ClInclude Include="RecursiveSubdivision.h" />
+    <ClInclude Include="SimpleDraw.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StrippleLine.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayBuffer.cpp" />
+    <ClCompile Include="CullFace.cpp" />
+    <ClCompile Include="EdgeFlag.cpp" />
     <ClCompile Include="OpenGL.cpp" />
+    <ClCompile Include="RecursiveSubdivision.cpp" />
+    <ClCompile Include="SimpleDraw.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="StrippleLine.cpp" />
+    <ClCompile Include="VertexArray.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

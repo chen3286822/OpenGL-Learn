@@ -13,3 +13,16 @@
 
 
 // TODO:  在此处引用程序需要的其他头文件
+#define GLEW_STATIC
+#include <GL/glew.h>
+#include <GL/glut.h>
+#include <math.h>
+#include <functional>
+#pragma comment(lib, "glew32s.lib")
+
+
+
+
+
+
+

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\Test">
+      <UniqueIdentifier>{7b06dcbf-e071-40cb-a725-3e05f836aa41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Test">
+      <UniqueIdentifier>{7b69f8e0-89dd-40b1-bf74-4d2e62726c6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,6 +30,30 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrayBuffer.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="CullFace.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeFlag.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDraw.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="RecursiveSubdivision.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="StrippleLine.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -31,6 +61,27 @@
     </ClCompile>
     <ClCompile Include="OpenGL.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RecursiveSubdivision.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDraw.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="CullFace.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="StrippleLine.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeFlag.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArray.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrayBuffer.cpp">
+      <Filter>源文件\Test</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
