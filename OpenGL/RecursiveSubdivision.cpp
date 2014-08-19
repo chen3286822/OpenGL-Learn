@@ -12,6 +12,15 @@ void RecursiveSubdivisionTest::init(void)
 	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);/* initialize viewing values   */
 }
 
+void RecursiveSubdivisionTest::reshape(GLint w, GLint h)
+{
+	GLint length = w > h ? h : w;
+	glViewport(0, 0, (GLsizei)length, (GLsizei)length);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
+}
+
 void RecursiveSubdivisionTest::normalize10(GLfloat* v)
 {
 	GLfloat normL = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);

@@ -25,10 +25,11 @@ void OpenGLTest::init(void)
 
 void OpenGLTest::reshape(GLint w, GLint h)
 {
-	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	GLint length = w > h ? h : w;
+	glViewport(0, 0, (GLsizei)length, (GLsizei)length);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0, (GLdouble)w, 0.0, (GLdouble)h);
+	glOrtho(0.0, 100.0, 0.0, 100.0, -10.0, 10.0);
 }
 
 void OpenGLTest::display()
@@ -68,7 +69,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(100, 100); /*Declare initial window size.*/
 	glutInitWindowPosition(100, 100);/*Declare initial window position.*/
 	glutCreateWindow("hello");/*Open window with "hello"in its title bar.*/
-	g_Test = SimpleDrawTest::create();
+	g_Test = RecursiveSubdivisionTest::create();
 	gInit();
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/
 	glutReshapeFunc(gReshape);
