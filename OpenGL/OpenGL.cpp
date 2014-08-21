@@ -5,6 +5,7 @@
 #include "OpenGL.h"
 
 #include "ArrayBuffer.h"
+#include "Cube.h"
 #include "CullFace.h"
 #include "EdgeFlag.h"
 #include "RecursiveSubdivision.h"
@@ -69,7 +70,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(100, 100); /*Declare initial window size.*/
 	glutInitWindowPosition(100, 100);/*Declare initial window position.*/
 	glutCreateWindow("hello");/*Open window with "hello"in its title bar.*/
-	g_Test = RecursiveSubdivisionTest::create();
+	g_Test = CubeTest::create();
 	gInit();
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/
 	glutReshapeFunc(gReshape);

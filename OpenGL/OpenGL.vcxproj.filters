@@ -54,6 +54,9 @@
     <ClInclude Include="VertexArray.h">
       <Filter>头文件\Test</Filter>
     </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
       <Filter>源文件\Test</Filter>
     </ClCompile>
     <ClCompile Include="ArrayBuffer.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
       <Filter>源文件\Test</Filter>
     </ClCompile>
   </ItemGroup>
