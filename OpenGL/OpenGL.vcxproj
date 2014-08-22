@@ -87,6 +87,7 @@
     <ClInclude Include="EdgeFlag.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="RecursiveSubdivision.h" />
+    <ClInclude Include="ShaderTest.h" />
     <ClInclude Include="SimpleDraw.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StrippleLine.h" />
@@ -100,6 +101,7 @@
     <ClCompile Include="EdgeFlag.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="RecursiveSubdivision.cpp" />
+    <ClCompile Include="ShaderTest.cpp" />
     <ClCompile Include="SimpleDraw.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

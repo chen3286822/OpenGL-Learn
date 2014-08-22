@@ -18,6 +18,7 @@
 #include <GL/glut.h>
 #include <math.h>
 #include <functional>
+#include <iostream>
 #pragma comment(lib, "glew32s.lib")
 
 

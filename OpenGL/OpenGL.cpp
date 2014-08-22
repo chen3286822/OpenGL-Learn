@@ -9,6 +9,7 @@
 #include "CullFace.h"
 #include "EdgeFlag.h"
 #include "RecursiveSubdivision.h"
+#include "ShaderTest.h"
 #include "SimpleDraw.h"
 #include "StrippleLine.h"
 #include "VertexArray.h"
@@ -70,7 +71,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(100, 100); /*Declare initial window size.*/
 	glutInitWindowPosition(100, 100);/*Declare initial window position.*/
 	glutCreateWindow("hello");/*Open window with "hello"in its title bar.*/
-	g_Test = CubeTest::create();
+	g_Test = ShaderTest::create();
 	gInit();
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/
 	glutReshapeFunc(gReshape);
