@@ -71,6 +71,16 @@ int main(int argc, char** argv)
 	glutInitWindowSize(100, 100); /*Declare initial window size.*/
 	glutInitWindowPosition(100, 100);/*Declare initial window position.*/
 	glutCreateWindow("hello");/*Open window with "hello"in its title bar.*/
+
+	const GLubyte * name = glGetString(GL_VENDOR);
+	const GLubyte * biaoshifu = glGetString(GL_RENDERER);
+	const GLubyte * OpenGLVersion = glGetString(GL_VERSION);
+	const GLubyte * gluVersion = gluGetString(GLU_VERSION);
+	printf("OpenGL实现厂商的名字：%s\n", name);
+	printf("渲染器标识符：%s\n", biaoshifu);
+	printf("OOpenGL实现的版本号：%s\n", OpenGLVersion);
+	printf("OGLU工具库版本：%s\n", gluVersion);
+
 	g_Test = ShaderTest::create();
 	gInit();
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/

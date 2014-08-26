@@ -1,5 +1,13 @@
 #pragma once
 
+#define CHECK_GL_ERROR_DEBUG() \
+do {\
+GLenum __error = glGetError(); \
+if (__error) {\
+	std::cout << "OpenGL error 0x" << __error << " in " << __FILE__ << " " << __FUNCTION__ << " " << __LINE__ << std::endl; \
+} \
+} while (false)
+
 #define CreateTest(type) \
 	static type* create() \
 { \
