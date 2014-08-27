@@ -1,32 +1,35 @@
 #include "stdafx.h"
 #include "RecursiveSubdivision.h"
 
-#define X 5.2573
-#define Z 8.5065
+#define X 52.573
+#define Z 85.065
 void RecursiveSubdivisionTest::init(void)
 {
 	glewInit();
 	glClearColor(0.0, 0.0, 0.0, 0.0);/* select clearing color   */
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);/* initialize viewing values   */
+	//glOrtho(-10.0, 10.0, -10.0, 10.0, -100.0, 100.0);/* initialize viewing values   */
 	
 	//开启深度测试，防止位于后面的三角形面由于后绘制而挡在前面
 	glEnable(GL_DEPTH_TEST);
+	glShadeModel(GL_SMOOTH);
 
 	//剔除背面
 	glFrontFace(GL_CCW);
 	glEnable(GL_CULL_FACE);
 
 	//开启光照
-	glEnable(GL_LIGHTING);
+	 glEnable(GL_LIGHTING);
 	
-	GLfloat ambientLight[] = { 0.0, 0.0, 1.0, 1.0 };
-	GLfloat diffuseLight[] = { 0.3, 0.3, 0.3, 1.0 };
-	GLfloat specular[] = { 0.0, 0.0, 1.0, 0.0 };
+	GLfloat ambientLight[] = { 0.2, 0.0, 0.0, 1.0 };
+	GLfloat diffuseLight[] = { 0.8, 0.0, 0.0, 1.0 };
+	GLfloat specular[] = { 1.0, 0.0, 0.0, 1.0 };
+	//射灯方向
+	GLfloat spotDir[] = { 0.0, 0.0, -1.0, 0.0 };
 
 	//材质的反射属性
-	GLfloat specref[] = { 0.5, 1.0, 1.0, 1.0 };
+	GLfloat specref[] = { 1.0, 0.0, 0.0, 1.0 };
 
 	//使用环境光
 	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
@@ -34,6 +37,9 @@ void RecursiveSubdivisionTest::init(void)
 	//glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
 	//glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDir);
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0f);
+
 	glEnable(GL_LIGHT0);
 
 	//启用颜色追踪
@@ -43,7 +49,7 @@ void RecursiveSubdivisionTest::init(void)
 	//设置材质镜面反射属性
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 	//设置镜面亮点大小和集中值
-	glMateriali(GL_FRONT, GL_SHININESS, 1);
+	glMateriali(GL_FRONT, GL_SHININESS, 50);
 }
 
 void RecursiveSubdivisionTest::reshape(GLint w, GLint h)
@@ -52,19 +58,24 @@ void RecursiveSubdivisionTest::reshape(GLint w, GLint h)
 	glViewport(0, 0, (GLsizei)length, (GLsizei)length);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
+	glOrtho(-100.0, 100.0, -100.0, 100.0, -100.0, 100.0);
 
 	//放置光源
-	GLfloat lightPos[] = { -170.0, 160.0, 100.0, 1.0 };
+	GLfloat lightPos[] = { 100.0, 100.0, 200.0, 1.0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+}
+
+void RecursiveSubdivisionTest::keyboard(GLubyte key, GLint x, GLint y)
+{
+
 }
 
 void RecursiveSubdivisionTest::normalize10(GLfloat* v)
 {
 	GLfloat normL = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-	v[0] = v[0] * 10 /normL;
-	v[1] = v[1] * 10 /normL;
-	v[2] = v[2] * 10 /normL;
+	v[0] = v[0] * 100 /normL;
+	v[1] = v[1] * 100 /normL;
+	v[2] = v[2] * 100 /normL;
 }
 
 void RecursiveSubdivisionTest::drawTriangle(GLfloat* v1, GLfloat* v2, GLfloat* v3)
@@ -82,7 +93,6 @@ void RecursiveSubdivisionTest::drawTriangle(GLfloat* v1, GLfloat* v2, GLfloat* v
 	norm[2] = vec1[0] * vec2[1] - vec1[1] * vec2[0];
 	// 单位化法线向量
 	normalize10(norm);
-	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_TRIANGLES);
 	//glNormal3fv(norm);
 	//使用每个顶点作为法线向量
@@ -130,6 +140,9 @@ void RecursiveSubdivisionTest::display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);/* clear all pixels   */
 
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	//绘制一个20面体
 	static GLfloat vData[12][3] =
 	{
@@ -137,22 +150,41 @@ void RecursiveSubdivisionTest::display(void)
 		{ 0.0, Z, X }, { 0.0, Z, -X }, { 0.0, -Z, X }, { 0.0, -Z, -X },
 		{ Z, X, 0.0 }, { -Z, X, 0.0 }, { Z, -X, 0.0 }, { -Z, -X, 0.0 }
 	};
-	static GLuint tindices[20][3] =
+	static GLuint tindices[1][3] =
 	{
-		{ 1, 4, 0 }, { 4, 9, 0 }, { 4, 5, 9 }, { 8, 5, 4 }, { 1, 8, 4 },
+		{ 1, 4, 0 }, /*{ 4, 9, 0 }, { 4, 5, 9 }, { 8, 5, 4 }, { 1, 8, 4 },
 		{ 1, 10, 8 }, { 10, 3, 8 }, { 8, 3, 5 }, { 3, 2, 5 }, { 3, 7, 2 },
 		{ 3, 10, 7 }, { 10, 6, 7 }, { 6, 11, 7 }, { 6, 0, 11 }, { 6, 1, 0 },
-		{ 10, 1, 6 }, { 11, 0, 9 }, { 2, 11, 9 }, { 5, 2, 9 }, { 11, 2, 7 },
+		{ 10, 1, 6 }, { 11, 0, 9 }, { 2, 11, 9 }, { 5, 2, 9 }, { 11, 2, 7 },*/
 	};
-	
-	for (int i = 0; i < 20; i++)
+
+	glColor3f(0.7f, 0.7f, 0.7f);
+	//glutSolidSphere(30.0f, 30.0f, 30.0f);
+
+ 	glBegin(GL_QUADS);
+ 	glNormal3f(0, 0, 1);
+ 	glVertex3f(-50, 50, 50);
+ 	glNormal3f(0, 0, 1);
+ 	glVertex3f(-50, -50, 50);
+ 	glNormal3f(0, 0, 1);
+ 	glVertex3f(50, -50,50);
+ 	glNormal3f(0, 0, 1);
+ 	glVertex3f(50, 50, 50);
+ 	glEnd();
+
+	for (int i = 0; i < 1; i++)
 	{
-		subDivision(&vData[tindices[i][0]][0], &vData[tindices[i][1]][0], &vData[tindices[i][2]][0], 1);
+		subDivision(&vData[tindices[i][0]][0], &vData[tindices[i][1]][0], &vData[tindices[i][2]][0], 0);
 	}
 	//使用glDrawElements 一次性绘制所有面
-	// 	glEnableClientState(GL_VERTEX_ARRAY);
-	// 	glVertexPointer(3, GL_FLOAT, 0, vData);
-	// 	glDrawElements(GL_TRIANGLES, 60, GL_UNSIGNED_INT, tindices);
-	// 	glDisableClientState(GL_VERTEX_ARRAY);
+// 	glEnableClientState(GL_VERTEX_ARRAY);
+// 	glEnableClientState(GL_NORMAL_ARRAY);
+// 	glVertexPointer(3, GL_FLOAT, 0, points);
+// 	glNormalPointer(GL_FLOAT, 0, normal);
+// 	glDrawElements(GL_QUADS, 6, GL_UNSIGNED_INT, index);
+// 	glDisableClientState(GL_VERTEX_ARRAY);
+// 	glDisableClientState(GL_NORMAL_ARRAY);
 	glFlush();/* start processing buffered OpenGL routines   */
+
+	glutSwapBuffers();
 }

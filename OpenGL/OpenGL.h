@@ -37,6 +37,7 @@ public:
 	virtual void init(void);
 	virtual void display(void);
 	virtual void reshape(GLint w, GLint h);
+	virtual void keyboard(GLubyte key, GLint x, GLint y);
 };
 
 extern OpenGLTest* g_Test;
