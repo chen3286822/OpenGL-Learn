@@ -5,6 +5,7 @@
 class ShaderTest : public OpenGLTest
 {
 public:
+	virtual ~ShaderTest();
 	CreateTest(ShaderTest);
 	virtual void init(void);
 	virtual void display(void);

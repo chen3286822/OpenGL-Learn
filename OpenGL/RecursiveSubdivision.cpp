@@ -10,6 +10,40 @@ void RecursiveSubdivisionTest::init(void)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);/* initialize viewing values   */
+	
+	//开启深度测试，防止位于后面的三角形面由于后绘制而挡在前面
+	glEnable(GL_DEPTH_TEST);
+
+	//剔除背面
+	glFrontFace(GL_CCW);
+	glEnable(GL_CULL_FACE);
+
+	//开启光照
+	glEnable(GL_LIGHTING);
+	
+	GLfloat ambientLight[] = { 0.0, 0.0, 1.0, 1.0 };
+	GLfloat diffuseLight[] = { 0.3, 0.3, 0.3, 1.0 };
+	GLfloat specular[] = { 0.0, 0.0, 1.0, 0.0 };
+
+	//材质的反射属性
+	GLfloat specref[] = { 0.5, 1.0, 1.0, 1.0 };
+
+	//使用环境光
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+	//设置光源
+	//glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+	//glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+	glEnable(GL_LIGHT0);
+
+	//启用颜色追踪
+	glEnable(GL_COLOR_MATERIAL);
+	//多边形正面的材质环境和散射颜色，追踪glColor
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+	//设置材质镜面反射属性
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
+	//设置镜面亮点大小和集中值
+	glMateriali(GL_FRONT, GL_SHININESS, 1);
 }
 
 void RecursiveSubdivisionTest::reshape(GLint w, GLint h)
@@ -19,6 +53,10 @@ void RecursiveSubdivisionTest::reshape(GLint w, GLint h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
+
+	//放置光源
+	GLfloat lightPos[] = { -170.0, 160.0, 100.0, 1.0 };
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 }
 
 void RecursiveSubdivisionTest::normalize10(GLfloat* v)
@@ -32,7 +70,7 @@ void RecursiveSubdivisionTest::normalize10(GLfloat* v)
 void RecursiveSubdivisionTest::drawTriangle(GLfloat* v1, GLfloat* v2, GLfloat* v3)
 {
 	//计算法线向量
-	GLfloat vec1[3], vec2[3], norm[3];
+	GLfloat vec1[3], vec2[3], norm[3], tmp[3];
 	for (int j = 0; j < 3; ++j)
 	{
 		vec1[j] = v1[j] - v2[j];
@@ -44,11 +82,21 @@ void RecursiveSubdivisionTest::drawTriangle(GLfloat* v1, GLfloat* v2, GLfloat* v
 	norm[2] = vec1[0] * vec2[1] - vec1[1] * vec2[0];
 	// 单位化法线向量
 	normalize10(norm);
-
+	glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_TRIANGLES);
-	glNormal3fv(norm);
+	//glNormal3fv(norm);
+	//使用每个顶点作为法线向量
+	memcpy(tmp, v1, 3 * sizeof(GLfloat));
+	normalize10(tmp);
+	glNormal3fv(tmp);
 	glVertex3fv(v1);
+	memcpy(tmp, v2, 3 * sizeof(GLfloat));
+	normalize10(tmp);
+	glNormal3fv(tmp);
 	glVertex3fv(v2);
+	memcpy(tmp, v3, 3 * sizeof(GLfloat));
+	normalize10(tmp);
+	glNormal3fv(tmp);
 	glVertex3fv(v3);
 	glEnd();
 }
@@ -80,7 +128,7 @@ void RecursiveSubdivisionTest::subDivision(GLfloat* v1, GLfloat* v2, GLfloat* v3
 
 void RecursiveSubdivisionTest::display(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT);/* clear all pixels   */
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);/* clear all pixels   */
 
 	//绘制一个20面体
 	static GLfloat vData[12][3] =

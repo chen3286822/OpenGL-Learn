@@ -31,6 +31,8 @@ enum class TestType
 class OpenGLTest
 {
 public:
+	virtual ~OpenGLTest(){}
+
 	CreateTest(OpenGLTest);
 	virtual void init(void);
 	virtual void display(void);

@@ -81,7 +81,7 @@ int main(int argc, char** argv)
 	printf("OOpenGL实现的版本号：%s\n", OpenGLVersion);
 	printf("OGLU工具库版本：%s\n", gluVersion);
 
-	g_Test = ShaderTest::create();
+	g_Test = RecursiveSubdivisionTest::create();
 	gInit();
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/
 	glutReshapeFunc(gReshape);

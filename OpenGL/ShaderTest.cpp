@@ -15,6 +15,12 @@ const Vertex vertices[] = {
 		{ { 1, 0.4 }, { 0.5, 0.5, 0.5, 1 } }
 };
 
+ShaderTest::~ShaderTest()
+{
+	//glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	//glDeleteProgram(m_program);
+}
+
 void ShaderTest::init()
 {
 	glewInit();
@@ -31,6 +37,7 @@ void ShaderTest::init()
 		"	gl_Position = gl_ModelViewProjectionMatrix * vPos;"
 		"	gl_FrontColor = vColor;"
 		"	gl_BackColor = gl_SecondaryColor;"
+		"	gl_PointSize = 10.0;"
 		"}"
 	};
 	GLuint program;
@@ -85,6 +92,7 @@ void ShaderTest::init()
 	//glVertexAttrib3f(5, 45.0, 5.0, 0.0);
 
 	m_program = program;
+
 	glUseProgram(program);
 }
 
@@ -109,22 +117,22 @@ void ShaderTest::display()
 	glEnableVertexAttribArray(posIndex);
 	glEnableVertexAttribArray(colorIndex);
 
+	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+
 	GLsizei stride = sizeof(Vertex);
 	const GLvoid* pCoords = &vertices[0].Position[0];
 	const GLvoid* pColors = &vertices[0].Color[0];
 	glVertexAttribPointer(posIndex, 2, GL_FLOAT, GL_FALSE, stride, pCoords);
 	glVertexAttribPointer(colorIndex, 4, GL_FLOAT, GL_FALSE, stride, pColors);
 	GLsizei vertexCount = sizeof(vertices) / sizeof(Vertex);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 
 	glDisableVertexAttribArray(posIndex);
 	glDisableVertexAttribArray(colorIndex);
-// 	glBegin(GL_POLYGON);
-// 	glVertex3i(45, 5, 0);
-// 	glVertex3i(55, 25, 0);
-// 	glVertex3i(55, 65, 0);
-// 	glVertex3i(45, 45, 0);
-// 	glEnd();
+
+	glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
 	glFlush();
 }
