@@ -28,6 +28,8 @@ enum class TestType
 	VertexArray,
 };
 
+void gTimer(GLint value);
+
 class OpenGLTest
 {
 public:
@@ -38,6 +40,7 @@ public:
 	virtual void display(void);
 	virtual void reshape(GLint w, GLint h);
 	virtual void keyboard(GLubyte key, GLint x, GLint y);
+	virtual void timer(GLint value);
 };
 
 extern OpenGLTest* g_Test;

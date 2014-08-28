@@ -27,7 +27,18 @@ void RecursiveSubdivisionTest::init(void)
 	GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
 	GLfloat specularRed[] = { 1.0, 0.0, 0.0, 1.0 };
 	//射灯方向
-	GLfloat spotDir[] = { 0.0, 0.0, -1.0, 0.0 };
+	spotDir[0] = 0;
+	spotDir[1] = 0;
+	spotDir[2] = -1;
+	spotDir[3] = 0;
+
+	//红射灯位置
+	redLightPos[0] = 0;
+	redLightPos[1] = 0;
+	redLightPos[2] = 200;
+	redLightPos[3] = 1;
+	//旋转角度
+	angle = 0;
 
 	//材质的反射属性
 	GLfloat specref[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -43,6 +54,7 @@ void RecursiveSubdivisionTest::init(void)
 	glLightfv(GL_LIGHT1, GL_SPECULAR, specularRed);
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDir);
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 85.0f);
+	glLightfv(GL_LIGHT1, GL_POSITION, redLightPos);
 	glEnable(GL_LIGHT1);
 	
 
@@ -68,8 +80,23 @@ void RecursiveSubdivisionTest::reshape(GLint w, GLint h)
 	GLfloat lightPos[] = { 0.0, 0.0, 200.0, 1.0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-	GLfloat lightPos2[] = { 150.0, 150.0, 200.0, 1.0 };
-	glLightfv(GL_LIGHT1, GL_POSITION, lightPos2);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 100.0f);
+}
+
+void RecursiveSubdivisionTest::timer(GLint value)
+{
+	//使红射灯绕圆圈旋转
+	angle += 2.4;
+	GLfloat temp = angle*3.1415 / 180;
+	redLightPos[0] = sin(temp) * 200;
+	redLightPos[2] = cos(temp) * 200;
+	glLightfv(GL_LIGHT1, GL_POSITION, redLightPos);
+	spotDir[0] = -sin(temp);
+	spotDir[2] = -cos(temp);
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDir);
+	glutPostRedisplay();
+
+	glutTimerFunc(20, gTimer, value);
 }
 
 void RecursiveSubdivisionTest::keyboard(GLubyte key, GLint x, GLint y)

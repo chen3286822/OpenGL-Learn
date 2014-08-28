@@ -44,6 +44,11 @@ void OpenGLTest::keyboard(GLubyte key, GLint x, GLint y)
 
 }
 
+void OpenGLTest::timer(GLint value)
+{
+
+}
+
 
 void gInit(void)
 {
@@ -63,6 +68,11 @@ void gReshape(GLint w, GLint h)
 void gKeyboard(GLubyte key, GLint x, GLint y)
 {
 	g_Test->keyboard(key, x, y);
+}
+
+void gTimer(GLint value)
+{
+	g_Test->timer(value);
 }
 
 
@@ -96,6 +106,7 @@ int main(int argc, char** argv)
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/
 	glutReshapeFunc(gReshape);
 	glutKeyboardFunc(gKeyboard);
+	glutTimerFunc(20, gTimer, 1);
 	glutMainLoop();/*Enter main loop and process events.*/
 
 	
