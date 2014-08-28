@@ -10,6 +10,7 @@
 #include "EdgeFlag.h"
 #include "RecursiveSubdivision.h"
 #include "ShaderTest.h"
+#include "Shadow.h"
 #include "SimpleDraw.h"
 #include "StrippleLine.h"
 #include "VertexArray.h"
@@ -101,7 +102,7 @@ int main(int argc, char** argv)
 	printf("OOpenGL实现的版本号：%s\n", OpenGLVersion);
 	printf("OGLU工具库版本：%s\n", gluVersion);
 
-	g_Test = RecursiveSubdivisionTest::create();
+	g_Test = ShadowTest::create();
 	gInit();
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/
 	glutReshapeFunc(gReshape);

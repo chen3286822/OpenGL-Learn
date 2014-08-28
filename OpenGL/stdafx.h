@@ -19,6 +19,7 @@
 #include <math.h>
 #include <functional>
 #include <iostream>
+#include "math3d.h"
 #pragma comment(lib, "glew32s.lib")
 
 
