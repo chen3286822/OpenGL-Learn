@@ -1,3 +1,4 @@
+#include "stdafx.h"
 // Math3d.c
 // Implementation of non-inlined functions in the Math3D Library
 // Richard S. Wright Jr.
