@@ -88,6 +88,7 @@
     <ClInclude Include="math3d.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="RecursiveSubdivision.h" />
+    <ClInclude Include="Reflection.h" />
     <ClInclude Include="ShaderTest.h" />
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="SimpleDraw.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="math3d.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="RecursiveSubdivision.cpp" />
+    <ClCompile Include="Reflection.cpp" />
     <ClCompile Include="ShaderTest.cpp" />
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SimpleDraw.cpp" />

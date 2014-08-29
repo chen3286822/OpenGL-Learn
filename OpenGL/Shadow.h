@@ -12,5 +12,6 @@ public:
 private:
 	//创建一个阴影投影矩阵，根据平面方程的系数以及光照的位置创建的
 	//存储在mat中
-	void makeShadowMatrix(GLfloat* vPoints[3], GLfloat* lightPos, GLfloat* mat);
+	M3DMatrix44f shadowMat;
+	static GLfloat lightPos[4];
 };
