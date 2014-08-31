@@ -85,6 +85,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="CullFace.h" />
     <ClInclude Include="EdgeFlag.h" />
+    <ClInclude Include="Fog.h" />
     <ClInclude Include="math3d.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="RecursiveSubdivision.h" />
@@ -102,6 +103,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CullFace.cpp" />
     <ClCompile Include="EdgeFlag.cpp" />
+    <ClCompile Include="Fog.cpp" />
     <ClCompile Include="math3d.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="RecursiveSubdivision.cpp" />

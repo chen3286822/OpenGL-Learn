@@ -69,6 +69,9 @@
     <ClInclude Include="Reflection.h">
       <Filter>头文件\Test</Filter>
     </ClInclude>
+    <ClInclude Include="Fog.h">
+      <Filter>头文件\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -111,6 +114,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Reflection.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Fog.cpp">
       <Filter>源文件\Test</Filter>
     </ClCompile>
   </ItemGroup>

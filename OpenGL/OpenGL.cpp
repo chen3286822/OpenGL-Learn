@@ -8,6 +8,7 @@
 #include "Cube.h"
 #include "CullFace.h"
 #include "EdgeFlag.h"
+#include "Fog.h"
 #include "RecursiveSubdivision.h"
 #include "Reflection.h"
 #include "ShaderTest.h"
@@ -89,8 +90,8 @@ int main(int argc, char** argv)
 	atexit(gRelease);
 
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);/*Declare initial display mode(single buffer and RGBA).*/
-	glutInitWindowSize(100, 100); /*Declare initial window size.*/
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);/*Declare initial display mode(single buffer and RGBA).*/
+	glutInitWindowSize(800, 600); /*Declare initial window size.*/
 	glutInitWindowPosition(100, 100);/*Declare initial window position.*/
 	glutCreateWindow("hello");/*Open window with "hello"in its title bar.*/
 
@@ -103,7 +104,7 @@ int main(int argc, char** argv)
 	printf("OOpenGL实现的版本号：%s\n", OpenGLVersion);
 	printf("OGLU工具库版本：%s\n", gluVersion);
 
-	g_Test = ReflectionTest::create();
+	g_Test = FogTest::create();
 	gInit();
 	glutDisplayFunc(gDisplay); /*Register callback function to display graphics.*/
 	glutReshapeFunc(gReshape);
