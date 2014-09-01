@@ -15,5 +15,5 @@ private:
 	GLuint m_program;
 
 	static GLfloat cube[8][3];
-	static GLfloat index[12][3];
+	static GLbyte index[12][3];
 };

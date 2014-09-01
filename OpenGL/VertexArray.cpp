@@ -27,9 +27,13 @@ void VertexArrayTest::display(void)
 	// 	glEnd();
 	//或者用索引
 	static GLbyte index[] = { 0, 1, 2, 3, 4 };
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glRotatef(45, 0, 0, 1);
 	glDrawElements(GL_POLYGON, 5, GL_UNSIGNED_BYTE, index);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	glFlush();
+	glutSwapBuffers();
 }

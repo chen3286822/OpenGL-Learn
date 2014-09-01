@@ -7,6 +7,9 @@ void SimpleDrawTest::display(void)
 
 	glColor3f(0.0, 0.0, 1.0);
 	//glLineWidth(5.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glRotatef(45, 0, 0, 1);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	glBegin(GL_POLYGON);
 	glVertex3i(5, 5, 0);
@@ -24,4 +27,5 @@ void SimpleDrawTest::display(void)
 	glEnd();
 
 	glFlush();
+	glutSwapBuffers();
 }

@@ -41,7 +41,7 @@ void CubeTest::display()
 	glLoadIdentity();
 	gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	glTranslatef(3.0, 0.0, 0.0);
-	glRotatef(45.0, 0.0, 0.0, 1.0);
+	glRotatef(45.0, 1.0, 0.0, 0.0);
 	glTranslatef(-3.0, 0.0, 0.0);
 	glBegin(GL_TRIANGLES);
 	glVertex3f(0.0, 0.0, 0.0);
@@ -50,4 +50,5 @@ void CubeTest::display()
 	glEnd();
 
 	glFlush();
+	glutSwapBuffers();
 }

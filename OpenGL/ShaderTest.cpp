@@ -26,7 +26,7 @@ GLfloat ShaderTest::cube[8][3] = {
 	{-1, 1, -1}
 };
 
-GLfloat ShaderTest::index[12][3] = {
+GLbyte ShaderTest::index[12][3] = {
 	{0, 1, 2},
 	{0, 2, 3},
 	{3, 2, 5},
@@ -51,19 +51,18 @@ void ShaderTest::init()
 {
 	glewInit();
 	glClearColor(0.0, 0.0, 0.0, 0.0);/* select clearing color   */
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-2.0, 3.0, -2.0, 3.0, -1.0, 1.0);/* initialize viewing values   */
 
+
+	//"	gl_FrontColor = vColor;"
+	//	"	gl_BackColor = gl_SecondaryColor;"
+	//"	gl_PointSize = 10.0;"
 	const GLchar* vShader[] = {
 		"attribute vec4 vPos;"
 		"attribute vec4 vColor;"
 		"void main()"
 		"{"
 		"	gl_Position = gl_ModelViewProjectionMatrix * vPos;"
-		"	gl_FrontColor = vColor;"
-		"	gl_BackColor = gl_SecondaryColor;"
-		"	gl_PointSize = 10.0;"
+		"	gl_FrontColor = gl_Color;"	
 		"}"
 	};
 	GLuint program;
@@ -128,37 +127,47 @@ void ShaderTest::reshape(GLint w, GLint h)
 	glViewport(0, 0, (GLsizei)length, (GLsizei)length);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-2.0, 3.0, -2.0, 3.0, -1.0, 1.0);
+	glOrtho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
 }
 
 void ShaderTest::display()
 {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	glClear(GL_COLOR_BUFFER_BIT);
 	//glColor3f(0.0, 0.0, 1.0);
 
 	//glVertexAttrib3f(5, 2.0, 1.0, 1.0);
 
 	GLint posIndex = glGetAttribLocation(m_program, "vPos");
-	GLint colorIndex = glGetAttribLocation(m_program, "vColor");
+	//GLint colorIndex = glGetAttribLocation(m_program, "vColor");
 	glEnableVertexAttribArray(posIndex);
-	glEnableVertexAttribArray(colorIndex);
+	//glEnableVertexAttribArray(colorIndex);
 
-	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	//glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	//GLsizei stride = sizeof(Vertex);
+	//const GLvoid* pCoords = &vertices[0].Position[0];
+	//const GLvoid* pColors = &vertices[0].Color[0];
+	//glVertexAttribPointer(posIndex, 2, GL_FLOAT, GL_FALSE, stride, pCoords);
+	//glVertexAttribPointer(colorIndex, 4, GL_FLOAT, GL_FALSE, stride, pColors);
+	//GLsizei vertexCount = sizeof(vertices) / sizeof(Vertex);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+	//glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	//glDisableVertexAttribArray(posIndex);
+	//glDisableVertexAttribArray(colorIndex);
+	//glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
-	GLsizei stride = sizeof(Vertex);
-	const GLvoid* pCoords = &vertices[0].Position[0];
-	const GLvoid* pColors = &vertices[0].Color[0];
-	glVertexAttribPointer(posIndex, 2, GL_FLOAT, GL_FALSE, stride, pCoords);
-	glVertexAttribPointer(colorIndex, 4, GL_FLOAT, GL_FALSE, stride, pColors);
-	GLsizei vertexCount = sizeof(vertices) / sizeof(Vertex);
+	glVertexAttribPointer(posIndex, 3, GL_FLOAT, GL_FALSE, 0, cube);
+// 	glRotatef(45, 0, 1, 0);
+// 	glRotatef(45, 1, 0, 0);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, index);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	glTranslatef(2.1, 0, 0);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, index);
 
-	glDisableVertexAttribArray(posIndex);
-	glDisableVertexAttribArray(colorIndex);
-
-	glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	
 
 	glFlush();
+	glutSwapBuffers();
 }
