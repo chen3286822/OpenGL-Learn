@@ -56,12 +56,19 @@ void ShaderTest::init()
 	//"	gl_FrontColor = vColor;"
 	//	"	gl_BackColor = gl_SecondaryColor;"
 	//"	gl_PointSize = 10.0;"
+	//"attribute vec4 vColor;"
+	//		"	vPos = vec4(vPos.x, vPos.y+weight, vPos.z, vPos.w);"
+	//"	gl_Position = gl_ModelViewProjectionMatrix * vPos;"
 	const GLchar* vShader[] = {
 		"attribute vec4 vPos;"
-		"attribute vec4 vColor;"
+		"attribute float weight;"
+		"uniform mat4 mv2;"
 		"void main()"
 		"{"
-		"	gl_Position = gl_ModelViewProjectionMatrix * vPos;"
+		"	vec4 V1 = gl_ModelViewMatrix * vPos;"
+		"	vec4 V2 = mv2 * vPos;"
+		"	vec4 V = (V1 * weight) + (V2 * (1.0 - weight));"
+		"	gl_Position = gl_ProjectionMatrix * V;"
 		"	gl_FrontColor = gl_Color;"	
 		"}"
 	};
@@ -119,6 +126,8 @@ void ShaderTest::init()
 	m_program = program;
 
 	glUseProgram(program);
+
+	angle = 0;
 }
 
 void ShaderTest::reshape(GLint w, GLint h)
@@ -141,9 +150,10 @@ void ShaderTest::display()
 	//glVertexAttrib3f(5, 2.0, 1.0, 1.0);
 
 	GLint posIndex = glGetAttribLocation(m_program, "vPos");
-	//GLint colorIndex = glGetAttribLocation(m_program, "vColor");
+	GLint weightIndex = glGetAttribLocation(m_program, "weight");
+	GLint mvIndex = glGetUniformLocation(m_program, "mv2");
 	glEnableVertexAttribArray(posIndex);
-	//glEnableVertexAttribArray(colorIndex);
+	glEnableVertexAttribArray(weightIndex);
 
 	//glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 	//GLsizei stride = sizeof(Vertex);
@@ -154,20 +164,57 @@ void ShaderTest::display()
 	//GLsizei vertexCount = sizeof(vertices) / sizeof(Vertex);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 	//glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-	//glDisableVertexAttribArray(posIndex);
-	//glDisableVertexAttribArray(colorIndex);
+
 	//glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
-	glVertexAttribPointer(posIndex, 3, GL_FLOAT, GL_FALSE, 0, cube);
-// 	glRotatef(45, 0, 1, 0);
-// 	glRotatef(45, 1, 0, 0);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, index);
+	GLfloat weights[8] = {
+		1, 1, 0.5, 0.5, 0.5, 0.5, 1, 1
+	};
+	GLfloat weights2[8] = {
+		0.5, 0.5, 1, 1, 1, 1, 0.5, 0.5
+	};
+	glVertexAttribPointer(posIndex, 3, GL_FLOAT, GL_FALSE, 0, cube);	
 
-	glTranslatef(2.1, 0, 0);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, index);
+	M3DMatrix44f mv;
+	glPushMatrix();
+	glRotatef(angle, 0, 0, 1);
+	glTranslatef(-2, 0, 0);
+	glGetFloatv(GL_MODELVIEW_MATRIX, mv);
+	glPopMatrix();
+	glUniformMatrix4fv(mvIndex, 1, GL_FALSE, mv);
+	glVertexAttribPointer(weightIndex, 1, GL_FLOAT, GL_FALSE, 0, weights);
+	glColor3f(1, 0, 0);
+	glTranslatef(-2, 0, 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, index);
 
-	
+	glPushMatrix();
+	glGetFloatv(GL_MODELVIEW_MATRIX, mv);
+	glPopMatrix();
+	glUniformMatrix4fv(mvIndex, 1, GL_FALSE, mv);
+	glPushMatrix();
+	glRotatef(angle, 0, 0, 1);
+	glVertexAttribPointer(weightIndex, 1, GL_FLOAT, GL_FALSE, 0, weights2);
+	glColor3f(0, 0, 1);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, index);
+	glPopMatrix();
+
+	glDisableVertexAttribArray(posIndex);
+	glDisableVertexAttribArray(weightIndex);
 
 	glFlush();
 	glutSwapBuffers();
+}
+
+void ShaderTest::keyboard(GLubyte key, GLint x, GLint y)
+{
+	switch (key)
+	{
+		case 'w':
+			angle++;
+			break;
+		case 's':
+			angle--;
+			break;
+	}
+	glutPostRedisplay();
 }
